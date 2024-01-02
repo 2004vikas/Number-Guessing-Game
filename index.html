@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            margin-top: 150px;
+            background-image: url(https://th.bing.com/th/id/OIP.pCvu9LYM7obYOyU1k5ubTgHaE7?rs=1&pid=ImgDetMain);
+            background-repeat: round;
+
+        }
+
+        #output {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <fieldset style="width: 33rem;
+    height: 12rem;
+    border-radius: 3rem;
+    background-color: white;">
+
+        <h1>Number Guessing Game</h1>
+        <hr>
+        <p>Try to guess the number between 1 and 100.</p>
+        <p>Enter your guess: <input type="number" id="userGuess" min="1" max="100" required>
+            <button onclick="checkGuess()">Submit Guess</button>
+        </p>
+        <div id="output"></div>
+        <script>
+            // JavaScript code for the Number Guessing Game
+
+            // Generate a random number between 1 and 100
+            const targetNumber = Math.floor(Math.random() * 100) + 1;
+
+            // Initialize variables
+            let attempts = 0;
+
+            function checkGuess() {
+                // Get the user's guess from the input field
+                const userGuess = parseInt(document.getElementById('userGuess').value);
+
+                // Validate the input
+                if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                    alert('Please enter a valid number between 1 and 100.');
+                    return;
+                }
+
+                attempts++;
+                // Check the user's guess
+                if (userGuess === targetNumber) {
+                    displayMessage(`Congratulations!You guessed the number in ${ attempts } attempts.`);
+                    disableInput();
+                } else {
+                    const hint = userGuess < targetNumber ? 'higher' : 'lower';
+                    displayMessage(`Try a ${ hint } number.Remaining attempts: ${ 10 - attempts }`);
+                    if (attempts === 10) {
+                        displayMessage(`Sorry, you've run out of attempts. The correct number was ${targetNumber}.`);
+                    disableInput();
+                    }
+                }
+            }
+
+            function displayMessage(message) {
+                const outputDiv = document.getElementById('output');
+                outputDiv.innerHTML = message;
+            }
+
+            function disableInput() {
+                document.getElementById('userGuess').disabled = true;
+                document.querySelector('button').disabled = true;
+            }
+        </script>
+    </fieldset>
+</body>
+
+</html>
